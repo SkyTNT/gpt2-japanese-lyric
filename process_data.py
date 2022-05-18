@@ -42,11 +42,11 @@ if __name__ == '__main__':
         songs = pickle.load(f)
 
     docs = []
-    for songs in tqdm(songs):
-        ids = get_token_ids(songs['lyric'], tokenizer)
+    for song in tqdm(songs):
+        ids = get_token_ids(song['name']+"[CLS]"+song['lyric'], tokenizer)
         if tokenizer.unk_token_id not in ids:
             docs.append(ids)
     print(len(docs))
     print(numpy.mean([len(x) for x in docs]))
-    with open("lyric_ids.pkl", "wb") as f:
+    with open("lyric_ids_titled.pkl", "wb") as f:
         pickle.dump(docs, f)
